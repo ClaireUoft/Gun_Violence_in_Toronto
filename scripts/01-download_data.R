@@ -32,6 +32,6 @@ data
 
 #### Save data ####
 # change the_raw_data to whatever name you assigned when you downloaded it.
-write_csv(data , "data /raw_data/raw_data.csv") 
+write_csv(data,"data/raw_data/raw_data.csv") 
 
          
