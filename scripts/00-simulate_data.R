@@ -20,7 +20,7 @@ number_of_events <- 100
 
 # Define the time range for the simulated data
 start_date <- as.Date("2004-01-01")
-end_date <- as.Date("2023-06-30")
+end_date <- as.Date("2024-06-30")
 
 # Generate the simulated data
 data <- 
