@@ -1,0 +1,87 @@
+---
+title: "Characterizing High-Risk Areas: A Neighborhood-Level Analysis of Gun Violence Patterns in Toronto"
+subtitle: "A Spatial and Temporal Study of Gun Violence Patterns and Community Impact from 2004 to 2024"
+author: 
+  - Claire Chang
+thanks: "Code and data are available at: LINK."
+date: today
+date-format: long
+Abstract: "This study identifies high-risk neighborhoods in Toronto by analyzing the spatial and temporal distribution of firearm discharges from 2004 to 2023. Our findings reveal that gun violence is highly concentrated in specific areas, with a significant increase in incidents during late-night hours. The results underscore the need for targeted interventions in these high-risk communities to mitigate gun violence and enhance public safety. This analysis provides critical insights into the spatial patterns of gun violence, highlighting areas that require focused policy efforts and community support"
+format: pdf
+number-sections: true
+bibliography: references.bib
+---
+
+```{r}
+library(tidyverse)
+```
+
+# Introduction
+
+Firearm violence has long been a critical issue in urban centers, particularly in cities like Toronto. Despite numerous efforts to curb gun violence, certain neighborhoods continue to experience high rates of firearm discharges. The history of gun control and crime prevention in Canada, although less pronounced than the United States' War on Drugs, has also seen periods of increased police presence and punitive measures, particularly during the implementation of the Anti-Gang Strategy in the early 2000s. Policies intended to enhance public safety have often disproportionately impacted marginalized communities, exacerbating existing social inequalities (Tulloch, 2018). 
+
+In Toronto, the issue of firearm violence is not evenly distributed across the city. Instead, it is concentrated in specific neighborhoods, which are often characterized by socio-economic challenges and higher proportions of racialized populations (Owusu-Bempah, 2014) @inbook. These areas tend to face increased surveillance and policing, leading to a cycle of criminalization and marginalization. This disparity highlights the need for a nuanced analysis of gun violence that goes beyond surface-level statistics to understand the underlying social dynamics.
+
+This paper aims to explore the spatial and temporal patterns of firearm discharges in Toronto from 2004 to 2023, identifying high-risk neighborhoods and examining the socio-economic and demographic factors that may contribute to elevated levels of gun violence. By analyzing these patterns alongside neighborhood profiles from the 2016 Census, we seek to provide a more comprehensive understanding of the communities most affected by firearm violence. This study underscores the importance of context in interpreting crime data and advocates for policies that address the root causes of violence rather than merely increasing punitive measures.
+
+# Data {#sec-data}
+
+To better understand the trends in firearm discharges over time and identify the neighborhoods most impacted by gun violence, I utilized the Firearm Discharges data from the Toronto Open Data portal (Gelfand 2020). The dataset, published by the Toronto Police Services, includes incidents from 2004 to 2023 and covers 158 neighborhoods in the Greater Toronto Area. It provides detailed information on each incident, including the date, time, neighborhood, and whether the incident resulted in injuries or fatalities.
+
+Using R @citeR (R Core Team 2020) and the tidyverse suite @tidyverse (Wickham et al. 2019), I cleaned and processed the data to prepare it for analysis. I first selected relevant variables, such as neighborhood, date, and incident outcome (injuries or deaths). To facilitate the analysis, I aggregated the data by year and neighborhood, creating a new variable that represents the total number of firearm discharges per neighborhood each year.
+
+Next, I identified the top ten neighborhoods with the highest number of firearm discharges to focus my analysis on areas most affected by gun violence. This approach allowed for a more comprehensive examination of the spatial distribution and temporal trends of firearm incidents across Toronto, providing insights into the underlying factors contributing to gun violence in these high-risk areas.
+
+```{r}
+# Required libraries
+library(ggplot2)
+library(dplyr)
+
+# Data preparation
+shootings_per_neighborhood <- data %>%
+  filter(!is.na(NEIGHBOURHOOD_158)) %>%
+  count(NEIGHBOURHOOD_158) %>%
+  arrange(desc(n)) %>%
+  top_n(10, n) # Keep only the top 10 neighborhoods
+
+# Bar chart
+ggplot(shootings_per_neighborhood, aes(x = reorder(NEIGHBOURHOOD_158, n), y = n)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Top 10 Neighborhoods with Most Shootings",
+       x = "Neighborhood",
+       y = "Number of Shootings") +
+  theme_minimal()
+
+```
+
+**Figure 1.** *Top 10 Toronto neighborhoods with the highest number of shootings from 2004 to 2023. The chart highlights neighborhoods with disproportionately high levels of firearm incidents, indicating areas that may require targeted interventions.*
+
+Using the selected top ten neighborhoods with the highest number of firearm discharges, I analyzed the relationship between population density and the rate of shootings to identify areas where crime rates are disproportionately high compared to their population size (Figure 1). Figure 1, created using ggplot2 (Wickham 2016), displays these neighborhoods ordered by the total number of shootings, with the neighborhood names on the y-axis and total shootings on the x-axis. While the Jane-Finch neighborhood has the highest number of shootings, it also has a relatively large population, suggesting that the high number of incidents may be related to its size. In contrast, Regent Park, despite having the third-highest number of shootings, has one of the smallest populations among the top ten, indicating a much higher crime rate relative to its population. This analysis highlights the need for targeted interventions in neighborhoods with high shooting rates but smaller populations, where the impact of gun violence may be more acute.
+
+
+
+# Results
+The data shows that gun violence incidents are highly concentrated in a few neighborhoods in Toronto. The top 10 neighborhoods with the most incidents include areas like Black Creek, Jane-Finch, and Regent Park. These areas have consistently high numbers of incidents year after year. For instance, Black Creek experienced an increasing trend in gun violence from 2004 to 2008.
+
+# Discussion
+
+## First discussion point {#sec-first-point}
+
+Neighborhood Impact: The concentration of gun violence in specific neighborhoods suggests that these areas face unique challenges. The high frequency of incidents in neighborhoods like Black Creek and Jane-Finch indicates that these communities may be dealing with systemic issues such as poverty and lack of resources, which could be contributing factors to the high levels of violence.
+
+## Second discussion point
+
+Patterns: Many incidents occur during late-night hours, which suggests that increased community support and policing during these times could help reduce incidents. Programs that provide safe spaces and activities during the night might be effective in these areas.
+
+## Third discussion point
+
+Severity of Incidents: The data also shows a significant number of incidents resulting in injuries. This highlights the urgent need for targeted interventions in the most affected neighborhoods to reduce not only the frequency but also the severity of gun violence.
+
+## Weaknesses and next steps
+
+The weakness of the dataset is that it may not capture all incidents, especially those not reported to the police, leading to underreporting in some areas.
+
+\newpage
+
+# References
