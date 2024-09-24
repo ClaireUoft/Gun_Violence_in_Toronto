@@ -18,4 +18,4 @@ The repo is structured as:
 
 ## Statement on LLM usage
 
-This project was done entirely without the use of language models or auto-complete tools. All code, analysis, and writing were completed manually.
+None of the components of this work involved the use of LLMs.
