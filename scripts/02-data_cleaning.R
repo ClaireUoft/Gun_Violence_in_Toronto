@@ -1,44 +1,35 @@
 #### Preamble ####
-# Purpose: Cleans the raw plane data recorded by two observers..... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 6 April 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: Cleans the raw marriage data into an analysis dataset
+# Author: Claire Chang
+# Date: 19 September 2024
+# Contact: Claire.chang@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
-
+# Pre-requisites: Need to have downloaded the data
+# Any other information needed? None.
 #### Workspace setup ####
 library(tidyverse)
 
 #### Clean data ####
-raw_data <- read_csv("inputs/data/plane_data.csv")
+raw_data <- read_csv("data/raw_data/raw_data.csv")
 
-cleaned_data <-
-  raw_data |>
-  janitor::clean_names() |>
-  select(wing_width_mm, wing_length_mm, flying_time_sec_first_timer) |>
-  filter(wing_width_mm != "caw") |>
+# Clean and process data
+cleaned_data <- raw_data |>
+  janitor::clean_names() |>  # Standardize column names
+  select(occ_date, occ_year, occ_month, occ_dow, occ_hour, occ_time_range, death, injuries, neighbourhood_158) |>  # Select relevant columns
   mutate(
-    flying_time_sec_first_timer = if_else(flying_time_sec_first_timer == "1,35",
-                                   "1.35",
-                                   flying_time_sec_first_timer)
+    # Replace NA values in 'death' and 'injuries' columns with 0
+    death = replace_na(death, 0),
+    injuries = replace_na(injuries, 0),
+    
+    # Convert columns to numeric if necessary
+    death = as.numeric(death),
+    injuries = as.numeric(injuries),
+    occ_hour = as.numeric(occ_hour)
   ) |>
-  mutate(wing_width_mm = if_else(wing_width_mm == "490",
-                                 "49",
-                                 wing_width_mm)) |>
-  mutate(wing_width_mm = if_else(wing_width_mm == "6",
-                                 "60",
-                                 wing_width_mm)) |>
-  mutate(
-    wing_width_mm = as.numeric(wing_width_mm),
-    wing_length_mm = as.numeric(wing_length_mm),
-    flying_time_sec_first_timer = as.numeric(flying_time_sec_first_timer)
-  ) |>
-  rename(flying_time = flying_time_sec_first_timer,
-         width = wing_width_mm,
-         length = wing_length_mm
-         ) |> 
-  tidyr::drop_na()
+  tidyr::drop_na()  # Remove rows with remaining missing values
 
-#### Save data ####
-write_csv(cleaned_data, "outputs/data/analysis_data.csv")
+#### Save cleaned data ####
+write_csv(cleaned_data, "data/analysis_data/analysis_data.csv")
+
+
+
