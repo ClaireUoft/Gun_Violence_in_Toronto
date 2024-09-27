@@ -121,6 +121,10 @@ ggplot(hourly_pattern, aes(x = occ_hour, y = n)) +
 
 ```
 
+## Measurement 
+
+A thorough discussion of measurement, relating to the dataset, is provided in the Data section. This section includeds key variables of number of firearm discharges, the time and location of each incident, and the resulting outcomes, including injuries and fatalities. The dataset, sourced from the Toronto Police Services, includes incidents from 2004 to 2023 and covers 158 neighborhoods in the Greater Toronto Area. The data cleaning and preparation process involved selecting relevant variables, handling missing values, and aggregating incidents by year and neighborhood to create a comprehensive view of gun violence patterns over time. This detailed examination ensures that the analysis is based on accurate and reliable measurements, great for interpreting the spatial and temporal trends of firearm discharges in Toronto. The Data section also addresses potential limitations in the dataset, such as underreporting or inconsistencies, and how these issues were managed to maintain the integrity of the analysis.
+
 # Results
 The data shows that gun violence incidents are highly concentrated in a few neighborhoods in Toronto. The top 10 neighborhoods with the most incidents include areas like Black Creek, Jane-Finch, and Regent Park. These areas have consistently high numbers of incidents year after year. For instance, Black Creek experienced an increasing trend in gun violence from 2004 to 2008.
 
