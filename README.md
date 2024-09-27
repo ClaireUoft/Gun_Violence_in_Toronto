@@ -8,13 +8,13 @@ This repository offers a complete framework for analyzing gun violence patterns 
 
 The repo is structured as:
 
--   `data/raw_data` contains the raw data as obtained from X.
+-   `data/raw_data` contains the raw data as obtained from OpenDataToronto as well as simulated data created by scripts/00-simulate_data.R.
 -   `data/analysis_data` contains the cleaned dataset that was constructed.
--   `model` contains fitted models. 
 -   `other` contains relevant literature, details about LLM chat interactions, and sketches.
 -   `paper` contains the files used to generate the paper, including the Quarto document and reference bibliography file, as well as the PDF of the paper. 
 -   `scripts` contains the R scripts used to simulate, download and clean data.
-
+-    An R project Gun_Violence.Rproj is used.
+-    All R codes are styled using styler in scripts/code_style.R
 
 ## Statement on LLM usage
 
