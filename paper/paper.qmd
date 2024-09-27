@@ -83,14 +83,14 @@ Using the selected top ten neighborhoods with the highest number of firearm disc
 #| echo: false
 
 deaths_trend <- data %>%
-  filter(!is.na(occ_year)) %>%  # Filter out missing year data
+  filter(!is.na(occ_year)) %>%  
   group_by(occ_year) %>%  # Group by year
-  summarise(Total_Deaths = sum(death, na.rm = TRUE))  # Sum of deaths per year
+  summarise(Total_Deaths = sum(death, na.rm = TRUE))  
 
 # Line plot for deaths trend over the years
 ggplot(deaths_trend, aes(x = occ_year, y = Total_Deaths)) +
-  geom_line(color = "darkred") +  # Line for the trend
-  geom_point(color = "darkred") +  # Points for each year
+  geom_line(color = "darkred") + 
+  geom_point(color = "darkred") + 
   labs(title = "Trend of Deaths Due to Shootings Over the Years",
        x = "Year",
        y = "Total Number of Deaths") +
@@ -117,15 +117,15 @@ Neighborhood Impact: The concentration of gun violence in specific neighborhoods
 #| fig-cap: "Trend of Shootings Over Time"
 
 hourly_pattern <- data %>%
-  filter(!is.na(occ_hour)) %>%  # Filter out rows with missing hour data
-  count(occ_hour) %>%           # Count the number of incidents per hour
-  arrange(occ_hour)             # Arrange data by hour
+  filter(!is.na(occ_hour)) %>%  
+  count(occ_hour) %>%           
+  arrange(occ_hour)             
 
 # Line plot for hourly pattern of incidents
 ggplot(hourly_pattern, aes(x = occ_hour, y = n)) +
-  geom_line(color = "darkred") +  # Line for the trend
-  geom_point(color = "darkred") +  # Points for each hour
-  scale_x_continuous(breaks = 0:23) +        # Set x-axis breaks for each hour
+  geom_line(color = "darkred") + 
+  geom_point(color = "darkred") + 
+  scale_x_continuous(breaks = 0:23) +       
   labs(title = "Hourly Pattern of Incidents",
        x = "Hour of the Day",
        y = "Number of Incidents") +
