@@ -70,7 +70,7 @@ ggplot(shootings_per_neighbourhood, aes(x = reorder(neighbourhood_158, n), y = n
 ```
 
 
-Using the selected top ten neighbourhoods with the highest number of firearm discharges, I analyzed the relationship between population density and the rate of shootings to identify areas where crime rates are disproportionately high compared to their population size (@fig-shootings).  (@fig-shootings), created using ggplot2 (@wickham2016), displays these neighbourhoods ordered by the total number of shootings, with the neighborhood names on the y-axis and total shootings on the x-axis. While the Jane-Finch neighbourhood has the highest number of shootings, it also has a relatively large population, suggesting that the high number of incidents may be related to its size. In contrast, Regent Park, despite having the third-highest number of shootings, has one of the smallest populations among the top ten, indicating a much higher crime rate relative to its population. This analysis highlights the need for targeted interventions in neighborhoods with high shooting rates but smaller populations, where the impact of gun violence may be more acute.
+Using the selected top ten neighbourhoods with the highest number of firearm discharges, I analyzed the relationship between population density and the rate of shootings to identify areas where crime rates are disproportionately high compared to their population size (@fig-shootings).  (@fig-shootings), created using ggplot2 (@ggplot2), displays these neighbourhoods ordered by the total number of shootings, with the neighborhood names on the y-axis and total shootings on the x-axis. While the Jane-Finch neighbourhood has the highest number of shootings, it also has a relatively large population, suggesting that the high number of incidents may be related to its size. In contrast, Regent Park, despite having the third-highest number of shootings, has one of the smallest populations among the top ten, indicating a much higher crime rate relative to its population. This analysis highlights the need for targeted interventions in neighborhoods with high shooting rates but smaller populations, where the impact of gun violence may be more acute.
 
 ## Deaths Analysis {#sec-death-analysis}
 ```{r}
@@ -95,8 +95,8 @@ ggplot(deaths_trend, aes(x = occ_year, y = Total_Deaths)) +
   theme(plot.title = element_text(size = 12)) 
 ```
 
-## Patterns {#sec-pattern}
 
+## Patterns {#sec-pattern}
 ```{r}
 
 #| label: fig-trends
