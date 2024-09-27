@@ -25,8 +25,6 @@ library(here)
 library(knitr)
 
 data <- read.csv(here("data/analysis_data/analysis_data.csv"))
-
-
 ```
 
 # Introduction
@@ -39,7 +37,7 @@ This paper aims to explore the spatial and temporal patterns of firearm discharg
 
 To better understand the trends in firearm discharges over time and identify the neighborhoods most impacted by gun violence, I utilized the Firearm Discharges data from the Toronto Open Data portal (@opendatatorotno). The dataset, published by the Toronto Police Services, includes incidents from 2004 to 2023 and covers 158 neighborhoods in the Greater Toronto Area. It provides detailed information on each incident, including the date, time, neighborhood, and whether the incident resulted in injuries or fatalities.
 
-Using (@citeR) and the tidyverse suite (@tidyverse) , I cleaned and processed the data to prepare it for analysis. I first selected relevant variables, such as neighborhood, date, and incident outcome (injuries or deaths). To facilitate the analysis, I aggregated the data by year and neighborhood, creating a new variable that represents the total number of firearm discharges per neighborhood each year.
+Using (@citeR) and libaies such as tidyverse suite (@tidyverse), dplyr (@dplyr), ggplot2 (@ggplot2), lubridate (@lubridate), here (@here), knitr (@knitr), I cleaned and processed the data to prepare it for analysis. I first selected relevant variables, such as neighborhood, Hour of day offence occurred, and incident outcome (injuries or deaths). To facilitate the analysis, I aggregated the data by year and neighborhood, creating a new variable that represents the total number of firearm discharges per neighborhood each year.
 
 Next, I identified the top ten neighborhoods with the highest number of firearm discharges to focus my analysis on areas most affected by gun violence. This approach allowed for a more comprehensive examination of the spatial distribution and temporal trends of firearm incidents across Toronto, providing insights into the underlying factors contributing to gun violence in these high-risk areas.
 
@@ -104,9 +102,6 @@ ggplot(deaths_trend, aes(x = occ_year, y = Total_Deaths)) +
 #| label: fig-trends
 #| fig-cap: "Patterns of Shootings in Toronto from 2004 to 2024"
 #| echo: false
-
-library(ggplot2)
-library(dplyr)
 
 hourly_pattern <- data %>%
   filter(!is.na(occ_hour)) %>%  
