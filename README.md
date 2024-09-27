@@ -18,4 +18,4 @@ The repo is structured as:
 
 ## Statement on LLM usage
 
-None of the components of this work involved the use of LLMs.
+Some code for graph and code had assistance from ChatGPT 4.0. The prompts and outputs were documented along with the entire chat history in other/llm/usage.txt.
