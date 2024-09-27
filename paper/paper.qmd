@@ -3,17 +3,30 @@ title: "Characterizing High-Risk Areas: A Neighborhood-Level Analysis of Gun Vio
 subtitle: "A Spatial and Temporal Study of Gun Violence Patterns and Community Impact from 2004 to 2024"
 author: 
   - Claire Chang
-thanks: "Code and data are available at: LINK."
+thanks: "Code and data are available at: https://github.com/ClaireUoft/Gun_Violence_in_Toronto."
 date: today
 date-format: long
-Abstract: "This study identifies high-risk neighborhoods in Toronto by analyzing the spatial and temporal distribution of firearm discharges from 2004 to 2023. Our findings reveal that gun violence is highly concentrated in specific areas, with a significant increase in incidents during late-night hours. The results underscore the need for targeted interventions in these high-risk communities to mitigate gun violence and enhance public safety. This analysis provides critical insights into the spatial patterns of gun violence, highlighting areas that require focused policy efforts and community support"
-format: pdf
+abstract: "This study identifies high-risk neighborhoods in Toronto by analyzing the spatial and temporal distribution of firearm discharges from 2004 to 2023. Our findings reveal that gun violence is highly concentrated in specific areas, with a significant increase in incidents during late-night hours. The results underscore the need for targeted interventions in these high-risk communities to mitigate gun violence and enhance public safety. This analysis provides critical insights into the spatial patterns of gun violence, highlighting areas that require focused policy efforts and community support"
+format: 
+  pdf:
+    toc: true
+    toc-depth: 2    
 number-sections: true
 bibliography: references.bib
 ---
 
-```{r}
-library(tidyverse)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(here)
+library(knitr)
+
+data <- read.csv(here("data/analysis_data/analysis_data.csv"))
+
+
 ```
 
 # Introduction
@@ -38,17 +51,17 @@ library(ggplot2)
 library(dplyr)
 
 # Data preparation
-shootings_per_neighborhood <- data %>%
-  filter(!is.na(NEIGHBOURHOOD_158)) %>%
-  count(NEIGHBOURHOOD_158) %>%
+shootings_per_neighbourhood <- data %>%
+  filter(!is.na(neighbourhood_158)) %>%
+  count(neighbourhood_158) %>%
   arrange(desc(n)) %>%
   top_n(10, n) # Keep only the top 10 neighborhoods
 
 # Bar chart
-ggplot(shootings_per_neighborhood, aes(x = reorder(NEIGHBOURHOOD_158, n), y = n)) +
+ggplot(shootings_per_neighbourhood, aes(x = reorder(neighbourhood_158, n), y = n)) +
   geom_bar(stat = "identity", fill = "steelblue") +
   coord_flip() +
-  labs(title = "Top 10 Neighborhoods with Most Shootings",
+  labs(title = "Top 10 Most Shootings Neighborhoods ",
        x = "Neighborhood",
        y = "Number of Shootings") +
   theme_minimal()
@@ -57,8 +70,44 @@ ggplot(shootings_per_neighborhood, aes(x = reorder(NEIGHBOURHOOD_158, n), y = n)
 
 **Figure 1.** *Top 10 Toronto neighborhoods with the highest number of shootings from 2004 to 2023. The chart highlights neighborhoods with disproportionately high levels of firearm incidents, indicating areas that may require targeted interventions.*
 
+
 Using the selected top ten neighborhoods with the highest number of firearm discharges, I analyzed the relationship between population density and the rate of shootings to identify areas where crime rates are disproportionately high compared to their population size (Figure 1). Figure 1, created using ggplot2 (Wickham 2016), displays these neighborhoods ordered by the total number of shootings, with the neighborhood names on the y-axis and total shootings on the x-axis. While the Jane-Finch neighborhood has the highest number of shootings, it also has a relatively large population, suggesting that the high number of incidents may be related to its size. In contrast, Regent Park, despite having the third-highest number of shootings, has one of the smallest populations among the top ten, indicating a much higher crime rate relative to its population. This analysis highlights the need for targeted interventions in neighborhoods with high shooting rates but smaller populations, where the impact of gun violence may be more acute.
 
+
+```{r}
+deaths_trend <- data %>%
+  filter(!is.na(occ_year)) %>%  # Filter out missing year data
+  group_by(occ_year) %>%  # Group by year
+  summarise(Total_Deaths = sum(death, na.rm = TRUE))  # Sum of deaths per year
+
+# Line plot for deaths trend over the years
+ggplot(deaths_trend, aes(x = occ_year, y = Total_Deaths)) +
+  geom_line(color = "darkred") +  # Line for the trend
+  geom_point(color = "darkred") +  # Points for each year
+  labs(title = "Trend of Deaths Due to Shootings Over the Years",
+       x = "Year",
+       y = "Total Number of Deaths") +
+  theme_minimal() +
+  scale_x_continuous(breaks = seq(min(deaths_trend$occ_year), max(deaths_trend$occ_year), by = 2))  # Adjust x-axis breaks
+```
+
+
+```{r}
+injuries_trend <- data %>%
+  filter(!is.na(occ_year)) %>%  # Filter out missing year data
+  group_by(occ_year) %>%  # Group by year
+  summarise(Total_Injuries = sum(injuries, na.rm = TRUE))  # Sum of deaths per year
+
+# Line plot for deaths trend over the years
+ggplot(injuries_trend, aes(x = occ_year, y = Total_Injuries)) +
+  geom_line(color = "darkred") +  # Line for the trend
+  geom_point(color = "darkred") +  # Points for each year
+  labs(title = "Trend of Deaths Due to Shootings Over the Years",
+       x = "Year",
+       y = "Total Number of Deaths") +
+  theme_minimal() +
+  scale_x_continuous(breaks = seq(min(injuries_trend$occ_year), max(injuries_trend$occ_year), by = 2))  # Adjust x-axis breaks
+```
 
 
 # Results
