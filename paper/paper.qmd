@@ -64,7 +64,8 @@ ggplot(shootings_per_neighbourhood, aes(x = reorder(neighbourhood_158, n), y = n
   labs(title = "Top 10 Most Shootings Neighborhoods ",
        x = "Neighborhood",
        y = "Number of Shootings") +
-  theme_minimal()
+  theme_minimal()+
+   theme(plot.title = element_text(size = 12)) 
 
 ```
 
@@ -88,9 +89,10 @@ ggplot(deaths_trend, aes(x = occ_year, y = Total_Deaths)) +
        x = "Year",
        y = "Total Number of Deaths") +
   theme_minimal() +
-  scale_x_continuous(breaks = seq(min(deaths_trend$occ_year), max(deaths_trend$occ_year), by = 2))  # Adjust x-axis breaks
+  scale_x_continuous(breaks = seq(min(deaths_trend$occ_year), max(deaths_trend$occ_year), by = 2)) +
+  theme(plot.title = element_text(size = 12)) 
 ```
-
+**Figure 2.** *The line plot illustrates the trends of deaths due to shootings in Toronto from 2004 to 2024.*
 
 ```{r}
 injuries_trend <- data %>%
@@ -106,9 +108,10 @@ ggplot(injuries_trend, aes(x = occ_year, y = Total_Injuries)) +
        x = "Year",
        y = "Total Number of Deaths") +
   theme_minimal() +
-  scale_x_continuous(breaks = seq(min(injuries_trend$occ_year), max(injuries_trend$occ_year), by = 2))  # Adjust x-axis breaks
+  scale_x_continuous(breaks = seq(min(injuries_trend$occ_year), max(injuries_trend$occ_year), by = 2))+
+  theme(plot.title = element_text(size = 12)) 
 ```
-
+**Figure 3.** *The line plot illustrates the trends of injuries due to shootings in Toronto from 2004 to 2024.*
 
 # Results
 The data shows that gun violence incidents are highly concentrated in a few neighborhoods in Toronto. The top 10 neighborhoods with the most incidents include areas like Black Creek, Jane-Finch, and Regent Park. These areas have consistently high numbers of incidents year after year. For instance, Black Creek experienced an increasing trend in gun violence from 2004 to 2008.
